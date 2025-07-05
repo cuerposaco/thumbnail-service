@@ -1,0 +1,12 @@
+{
+  "name": "thumbnail-service",
+  "version": "1.0.0",
+  "description": "API REST server to generate thumbnails in tasks from any image uploaded or requested",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
