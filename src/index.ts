@@ -1,4 +1,4 @@
-import app from "./infrastructure/server";
+import app from './infrastructure/server';
 
 const { APP_PORT = 3000 } = process.env;
 

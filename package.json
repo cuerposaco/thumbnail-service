@@ -2,9 +2,14 @@
   "name": "thumbnail-service",
   "version": "1.0.0",
   "description": "API REST server to generate thumbnails in tasks from any image uploaded or requested",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -- src/index.ts",
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "test": "jest",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +18,21 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.30.1",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.10",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
     "jest": "^30.0.4",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }
