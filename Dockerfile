@@ -17,3 +17,6 @@ FROM base as development
 COPY . ${WORKING_DIR}
 
 RUN npm install
+# https://sharp.pixelplumbing.com/install/#cross-platform
+RUN rm -rf package-lock.json
+RUN npm install --os=linux --libc=musl --cpu=arm64 sharp
