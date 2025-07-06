@@ -1,5 +1,5 @@
-import sharp, { Sharp } from 'sharp';
 import fs from 'fs/promises';
+import sharp, { Sharp } from 'sharp';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const resizeImage = async (input: any, width: number) => {

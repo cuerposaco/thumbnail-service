@@ -1,5 +1,5 @@
 import { Server } from 'http';
-import { rmdir } from 'fs/promises';
+import { rm } from 'fs/promises';
 import request from 'supertest';
 import express from 'express';
 import mongoose, { isValidObjectId } from 'mongoose';
@@ -20,7 +20,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await mongoose.connection?.db?.dropDatabase();
   await mongoose.connection.close();
-  await rmdir('output/2000x1000_image-test/', { recursive: true });
+  await rm('output/2000x1000_image-test/', { recursive: true });
 });
 
 describe('API REST', () => {
