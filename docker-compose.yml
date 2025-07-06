@@ -20,7 +20,6 @@ services:
     volumes:
       - .:/usr/app
       - ./output:/app/output
-      - /app/node_modules
   mongo:
     image: mongo:latest
     container_name: mongo
