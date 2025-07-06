@@ -19,7 +19,7 @@ services:
     command: npm run dev
     volumes:
       - .:/usr/app
-      - /app/node_modules
+      - ./output:/app/output
   mongo:
     image: mongo:latest
     container_name: mongo

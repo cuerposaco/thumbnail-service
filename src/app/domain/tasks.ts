@@ -10,12 +10,12 @@ const getPrice = ({
   return Number(toFixed);
 };
 
-export const createTask = async () => {
+export const createTask = async (originalPath: string) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const task: any = {
     status: TaskStatus.PENDING,
     price: getPrice(),
-    originalPath: 'fake/path.jpg',
+    originalPath,
   };
 
   const createdTask = await TaskModel.create(task);
@@ -65,3 +65,16 @@ export const addImageToTask = async (taskId: string, imageId: string) => {
 
   return updatedTask;
 };
+
+const setAs = (status: TaskStatus) => async (taskId: string) => {
+  const updatedTask = await TaskModel.findOneAndUpdate(
+    { _id: new Types.ObjectId(taskId) },
+    { status },
+    { new: true },
+  );
+
+  return updatedTask;
+};
+
+export const setAsCompleted = setAs(TaskStatus.COMPLETED);
+export const setAsFailed = setAs(TaskStatus.FAILED);

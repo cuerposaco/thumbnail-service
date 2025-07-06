@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export enum TaskStatus {
   COMPLETED = 'completed',
   PENDING = 'pending',
-  ERROR = 'error',
+  FAILED = 'failed',
 }
 
 interface ITask extends Document {
