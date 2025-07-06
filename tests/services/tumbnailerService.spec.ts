@@ -7,7 +7,7 @@ import express from 'express';
 import {
   thumbnailerServiceByFile,
   thumbnailerServiceByRemote,
-} from '../../infrastructure/services/thumbnailerService';
+} from '../../src/infrastructure/services/thumbnailerService';
 
 describe('ThumbnailerService', () => {
   describe('thumbnailerServiceByFile', () => {
