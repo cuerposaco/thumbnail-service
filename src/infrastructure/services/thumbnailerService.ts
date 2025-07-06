@@ -1,5 +1,5 @@
 import sharp, { Sharp } from 'sharp';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const resizeImage = async (input: any, width: number) => {
@@ -13,9 +13,9 @@ export async function thumbnailerServiceByFile(
   imageInput: string,
   width: number,
 ): Promise<Sharp | undefined> {
-  const input = fs.readFileSync(imageInput);
-  // Resize the image to the desired width while maintaining the aspect ratio
+  const input = await fs.readFile(imageInput);
   return resizeImage(input, width);
+  // Resize the image to the desired width while maintaining the aspect ratio
 }
 
 export async function thumbnailerServiceByRemote(
