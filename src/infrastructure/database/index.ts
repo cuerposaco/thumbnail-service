@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import logger from '../logger/index';
-import { connectionOptions, MONGO_URI } from '../config/mongo';
 
-export async function connect() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function connect(MONGO_URI: string, connectionOptions: any) {
   try {
     logger.info('Connecting to db', MONGO_URI);
     await mongoose.connect(MONGO_URI, connectionOptions);
