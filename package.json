@@ -19,7 +19,8 @@
     "http-status": "^2.1.0",
     "mongoose": "^8.16.1",
     "sharp": "^0.34.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "zod": "^3.25.75"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
