@@ -16,7 +16,6 @@ export const validateMiddleware =
   (req: Request, res: Response, next: NextFunction) => {
     try {
       logger.info(`Validating ${validate}...`);
-      console.log(req[validate]);
       validator.parse(req[validate]);
       next();
     } catch (error: z.ZodError | unknown) {
