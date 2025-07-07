@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'node:path';
 import { mkdir } from 'fs/promises';
 import crypto from 'crypto';
+import HttpStatus from 'http-status';
 import {
   thumbnailerServiceByFile,
   thumbnailerServiceByRemote,
 } from '../../infrastructure/services/thumbnailerService';
-import { TaskModel } from '../models/TaskModel';
+import { ITask, TaskModel } from '../models/TaskModel';
 import { createImageThumbnail } from '../domain/images';
+import AppError from '../../infrastructure/errorhandler/appError';
 
 const SIZES = [800, 1024];
 
@@ -23,6 +24,11 @@ const parseFileOutput = (
   );
 };
 
+interface ThumbnailResults {
+  fileOutput: string;
+  size: number;
+}
+
 export const createHash = (str: string) => {
   return crypto.createHash('md5').update(str).digest('hex');
 };
@@ -31,11 +37,12 @@ export const createThumbnails = async (
   taskId: string,
   location: 'LOCAL' | 'REMOTE',
 ) => {
-  const task = await TaskModel.findById(taskId);
-  if (!task) throw new Error('Task not found');
+  const task: ITask | null = await TaskModel.findById(taskId);
+  if (!task) throw new AppError(HttpStatus.NOT_FOUND, 'Task not found');
 
   const { originalPath } = task;
-  if (!originalPath) throw new Error('Original path not found');
+  if (!originalPath)
+    throw new AppError(HttpStatus.NOT_FOUND, 'Original path not found');
 
   const { name, ext } = path.parse(originalPath);
 
@@ -44,7 +51,7 @@ export const createThumbnails = async (
       ? thumbnailerServiceByFile
       : thumbnailerServiceByRemote;
 
-  const thumbnails = SIZES.map((size) =>
+  const thumbnails: Promise<ThumbnailResults>[] = SIZES.map((size) =>
     executeFn(task.originalPath, size).then(async (result) => {
       const fileOutput = parseFileOutput(FILE_PATTERN, {
         name,
@@ -63,11 +70,11 @@ export const createThumbnails = async (
     }),
   );
 
-  const _thumbnails = (await Promise.all(thumbnails)) as any[];
+  const _thumbnails = await Promise.all(thumbnails);
 
   return Promise.all(
-    _thumbnails.map(({ fileOutput, size }: any) =>
-      createImageThumbnail({ resolution: size, path: fileOutput }),
+    _thumbnails.map(({ fileOutput, size }) =>
+      createImageThumbnail({ resolution: String(size), path: fileOutput }),
     ),
   );
 };

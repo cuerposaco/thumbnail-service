@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import HttpStatus from 'http-status';
 import {
   addImageToTask,
   // addImageToTask,
@@ -9,12 +10,17 @@ import {
 } from '../domain/tasks';
 import logger from '../../infrastructure/logger';
 import { createThumbnails as createThumbnailsController } from './thumbnail';
-// import { createImageThumbnail } from '../domain/images';
+import AppError from '../../infrastructure/errorhandler/appError';
 
 export const createTask: RequestHandler = async (req, res, next) => {
   const { imagePath, imageUri } = req.body || {};
   if (!(imagePath || imageUri)) {
-    next(new Error('imagePath or imageUri are required'));
+    next(
+      new AppError(
+        HttpStatus.BAD_REQUEST,
+        'imagePath or imageUri are required',
+      ),
+    );
     return;
   }
 
@@ -23,7 +29,7 @@ export const createTask: RequestHandler = async (req, res, next) => {
     const { images, ...createdTask } = await createTaskDomain(
       imagePath || imageUri,
     );
-    res.status(200).json(createdTask);
+    res.status(HttpStatus.CREATED).json(createdTask);
     const { taskId } = createdTask;
 
     createThumbnailsController(taskId, imagePath ? 'LOCAL' : 'REMOTE')
@@ -56,10 +62,10 @@ export const getTaskById: RequestHandler = async (req, res, next) => {
     if (task.images && !task.images.length) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { images, ...foundTask } = task;
-      res.status(200).json(foundTask);
+      res.status(HttpStatus.OK).json(foundTask);
       return;
     }
-    res.status(200).json(task);
+    res.status(HttpStatus.OK).json(task);
   } catch (error) {
     next(error);
   }

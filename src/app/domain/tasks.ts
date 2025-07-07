@@ -1,5 +1,7 @@
-import { TaskModel, TaskStatus } from '../models/TaskModel';
 import { Types } from 'mongoose';
+import HttpStatus from 'http-status';
+import AppError from '../../infrastructure/errorhandler/appError';
+import { TaskModel, TaskStatus } from '../models/TaskModel';
 
 const getPrice = ({
   min = 5,
@@ -50,7 +52,7 @@ export const getTaskById = async (id: string) => {
   ]);
 
   if (!task) {
-    throw new Error('Task not found');
+    throw new AppError(HttpStatus.NOT_FOUND, 'Task not found');
   }
 
   return task;

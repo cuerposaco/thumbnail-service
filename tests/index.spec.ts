@@ -32,7 +32,7 @@ describe('API REST', () => {
     it('should fail create Task if payload not provided', async () => {
       const response = await request(app).post('/tasks');
 
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(400);
     });
 
     describe('payload "imagePath"', () => {
@@ -41,7 +41,7 @@ describe('API REST', () => {
           .post('/tasks')
           .send(LOCAL_FILE_PAYLOAD);
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         expect(isValidObjectId(response.body.taskId)).toBeTruthy();
         expect(response.body).toStrictEqual({
           taskId: expect.any(String),
@@ -72,7 +72,7 @@ describe('API REST', () => {
           .post('/tasks')
           .send(REMOTE_FILE_PAYLOAD);
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         expect(isValidObjectId(response.body.taskId)).toBeTruthy();
         expect(response.body).toStrictEqual({
           taskId: expect.any(String),

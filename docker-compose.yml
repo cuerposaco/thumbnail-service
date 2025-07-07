@@ -18,7 +18,7 @@ services:
       APP_PORT: 8080
     command: npm run dev
     volumes:
-      - .:/usr/app
+      - ./src:/usr/app/src
       - ./output:/app/output
   mongo:
     image: mongo:latest
