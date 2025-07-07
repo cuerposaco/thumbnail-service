@@ -14,6 +14,7 @@ export function errorHandler(
 
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
+      code: err.statusCode,
       message: err.message,
       ...((err.data && { data: err.data }) || {}),
     });
