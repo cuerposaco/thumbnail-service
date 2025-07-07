@@ -1,13 +1,9 @@
 export class AppError extends Error {
   statusCode: number;
-  data: Record<string, unknown> | undefined;
+  data: unknown;
   stack?: string | undefined;
 
-  constructor(
-    statusCode: number,
-    message: string,
-    data?: Record<string, unknown> | undefined,
-  ) {
+  constructor(statusCode: number, message: string, data?: unknown) {
     super(message);
     this.statusCode = statusCode;
     this.data = data;
