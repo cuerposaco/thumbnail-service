@@ -7,11 +7,7 @@ import {
 
 const TaskPostValidator = z
   .object({
-    imagePath: z.optional(
-      z
-        .string()
-        .url({ message: 'Use "imagePath" to create a task from local file' }),
-    ),
+    imagePath: z.optional(z.string()),
     imageUri: z.optional(
       z
         .string()
